@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../autoload_tests.hh");
 
-use \HHUnit\Colors;
+use \HHUnit\UI\Colors;
 use \HHUnit\Test;
 
 class ColorsTest extends Test {

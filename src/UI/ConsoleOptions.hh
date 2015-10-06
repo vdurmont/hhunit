@@ -1,22 +1,21 @@
 <?hh
 
-namespace HHUnit;
+namespace HHUnit\UI;
 
+/**
+ * ConsoleOptions is a tool that helps parse the command line arguments.
+ */
 class ConsoleOptions {
   private string $testPath;
 
-  public static function parse(array<string> $argv) : ConsoleOptions {
+  public static function createFromCommandLine(array<string> $argv) : ConsoleOptions {
     // TODO add options? --help for example.
     if (count($argv) > 1) {
       $testPath = $argv[count($argv) - 1];
     } else {
-      $testPath = ConsoleOptions::getCurrentDir();
+      $testPath = getcwd();
     }
     return new ConsoleOptions($testPath);
-  }
-
-  private static function getCurrentDir() : string {
-    return getcwd();
   }
 
   public function __construct(string $testPath) {

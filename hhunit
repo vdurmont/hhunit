@@ -1,0 +1,9 @@
+<?hh
+
+namespace HHUnit;
+
+// Load everything.
+require(__DIR__."/src/autoload.php");
+
+// Bootstrap the program
+HHUnit::run();

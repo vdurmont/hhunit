@@ -2,6 +2,9 @@
 
 namespace HHUnit;
 
+use \HHUnit\UI\Colors;
+use \HHUnit\UI\Console;
+
 class Summary {
   private string $rootPath;
   private array<TestSuite> $testSuites;

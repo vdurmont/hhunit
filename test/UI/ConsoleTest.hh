@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../autoload_tests.hh");
 
-use \HHUnit\Console;
+use \HHUnit\UI\Console;
 use \HHUnit\Test;
 
 class ConsoleTest extends Test {

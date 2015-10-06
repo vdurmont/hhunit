@@ -2,6 +2,8 @@
 
 namespace HHUnit;
 
+use \HHUnit\UI\Colors;
+
 class Test {
   public static function setUpClass() : void {
   }
@@ -18,6 +20,17 @@ class Test {
   public function assertEquals(mixed $expected, mixed $actual, ?string $message = "") : void {
     if ($expected != $actual) {
       throw new AssertionException(Test::getAssertionMessageForComparison($expected, $actual, $message));
+    }
+  }
+
+  public function assertContains(mixed $needle, array<mixed> $haystack, ?string $message = "") : void {
+    var_dump($needle);
+    var_dump($haystack);
+    if (!in_array($needle, $haystack)) {
+      if ($message == null) {
+        $message = "Unable to find in array"; // TODO error msg
+      }
+      throw new AssertionException(Colors::color("AssertionException: ".$message."\n", "yellow", null));
     }
   }
 

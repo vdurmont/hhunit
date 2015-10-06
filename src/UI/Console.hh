@@ -1,22 +1,27 @@
 <?hh
 
-namespace HHUnit;
+namespace HHUnit\UI;
+
+use \HHUnit\HHUnit;
+use \HHUnit\Runner\TestSuiteRunner;
+use \HHUnit\Summary;
 
 class Console {
-  private ConsoleOptions $options;
-
-  public function __construct(ConsoleOptions $options) {
-    $this->options = $options;
-  }
-
   public function run() : void {
-    $realTestPath = Console::getRealTestPath($this->options->getTestPath());
+
+    // TODO ???
+    // $config = $configResolver->resolveConfig($this->options);
+    // $testFiles = $fileResolver->getTestFiles($this->config);
+    // $summary = $runner->runTests($this->config, $testFiles);
+
+
+    $realTestPath = Console::getRealTestPath(HHunit::getInstance()->config->getTestPath());
     $files = Console::getTestFiles($realTestPath);
 
     $testSuites = array();
     $startTime = microtime(true);
     foreach($files as $file) {
-      $testSuite = Runner::run($file);
+      $testSuite = TestSuiteRunner::run($file);
       if ($testSuite != null) {
         $testSuites[] = $testSuite;
       }

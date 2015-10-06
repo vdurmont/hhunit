@@ -19,13 +19,13 @@ _**TODO** Make it available on packagist_
 
 You should create a cool alias to simplify your life:
 ```
-alias hhunit="hhvm <HHUNIT_HOME>/HHUnit.hh"
+alias hhunit="hhvm <HHUNIT_HOME>/hhunit"
 ```
 
 Run the tests with:
 
 ```bash
-hhvm <HHUNIT_HOME>/HHUnit.hh <TEST_PATH>
+hhvm <HHUNIT_HOME>/hhunit <TEST_PATH>
 # Or with the alias:
 hhunit <TEST_PATH>
 ```

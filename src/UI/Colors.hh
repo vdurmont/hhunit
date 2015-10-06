@@ -1,6 +1,6 @@
 <?hh
 
-namespace HHUnit;
+namespace HHUnit\UI;
 
 class Colors {
   private static string $reset = "\033[0m";
