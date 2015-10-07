@@ -27,4 +27,8 @@ class Config {
   public function getTestPath() : string {
     return $this->testPath;
   }
+
+  public function setTestPath(string $testPath) : void {
+    $this->testPath = $testPath;
+  }
 }

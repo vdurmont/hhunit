@@ -8,5 +8,5 @@ require(__DIR__."/src/autoload.hh");
 use \HHUnit\UI\Console;
 
 // Bootstrap the program with the defaults
-$console = new Console();
+$console = new Console($_SERVER["argv"]);
 HHUnit::run($console, $console);

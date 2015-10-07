@@ -11,9 +11,22 @@ use \HHUnit\UI\IPrinter;
 * Manages all the access to the console.
 */
 class Console implements IPrinter, IConfigLoader {
+  private array<string> $argv;
+
+  public function __construct(array<string> $argv) {
+    $this->argv = $argv;
+  }
+
   public function loadConfig() : Config {
-    // TODO code me
-    return new Config();
+    // TODO add options? --help for example.
+    if (count($this->argv) > 1) {
+      $testPath = realpath($this->argv[count($this->argv) - 1]);
+    } else {
+      $testPath = getcwd();
+    }
+    $config = new Config();
+    $config->setTestPath($testPath);
+    return $config;
   }
 
   public function write(string $str) : void {
