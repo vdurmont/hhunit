@@ -1,8 +1,8 @@
-<?hh
+<?hh // strict
 
 namespace HHUnit\UI;
 
-class Colors {
+class ConsoleColors {
   private static string $reset = "\033[0m";
   private static array<string, string> $textColors = array(
     "black" => "0;30",
@@ -36,16 +36,16 @@ class Colors {
   public static function color(string $message, ?string $textColor, ?string $bgColor) : string {
     $coloredMessage = "";
 
-    if ($textColor != null && isset(Colors::$textColors[$textColor])) {
-      $coloredMessage .= "\033[".Colors::$textColors[$textColor]."m";
+    if ($textColor !== null && array_key_exists($textColor, ConsoleColors::$textColors)) {
+      $coloredMessage .= "\033[".ConsoleColors::$textColors[$textColor]."m";
     }
 
-    if ($bgColor != null && isset(Colors::$bgColors[$bgColor])) {
-      $coloredMessage .= "\033[".Colors::$bgColors[$bgColor]."m";
+    if ($bgColor !== null && array_key_exists($bgColor, ConsoleColors::$bgColors)) {
+      $coloredMessage .= "\033[".ConsoleColors::$bgColors[$bgColor]."m";
     }
 
     $coloredMessage .= $message;
-    $coloredMessage .= Colors::$reset;
+    $coloredMessage .= ConsoleColors::$reset;
 
     return $coloredMessage;
   }

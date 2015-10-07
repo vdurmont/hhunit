@@ -1,50 +1,62 @@
-<?hh
+<?hh // strict
 
 namespace HHUnit;
 
 use \HHUnit\Core\Config;
-use \HHUnit\Runner\Runner;
-use \HHUnit\UI\Console;
-use \HHUnit\UI\ConsoleOptions;
-use \HHUnit\Utils\FileService;
+use \HHUnit\Core\FileService;
+use \HHUnit\Core\IConfigLoader;
+use \HHUnit\Exception\HHUnitException;
+use \HHUnit\Runner\TestRunner;
+use \HHUnit\UI\IPrinter;
 
 /**
-* HHUnit is the main entrypoint of the framework.
-* It creates the main services to emulate a dependency injection framework.
-* TODO real DI
-* Then, it launches the tests.
+* HHUnit is the main entrypoint of the test framework.
 */
 class HHUnit {
-  private static ?HHUnit $instance;
-  public Console $console;
-  public Config $config;
-  public FileService $fileService;
-  public Runner $runner;
+  // TODO real DI with annotations?
+  public static ?IPrinter $printer;
+  public static ?Config $config;
+  public static ?FileService $fileService;
 
-  public static function getInstance() : HHUnit {
-    if (self::$instance == null) {
-      self::$instance = new HHUnit();
+  ////////////////////////////////////
+  // MAIN METHODS
+  ////////////////////////////////////
+
+  public static function run(IPrinter $printer, IConfigLoader $configLoader) : void {
+    // Init the DI components
+    self::$printer = $printer;
+    self::$config = $configLoader->loadConfig();
+
+    // Run the tests
+    TestRunner::run();
+  }
+
+  ////////////////////////////////////
+  // DI ACCESSORS
+  ////////////////////////////////////
+
+  public static function getConfig() : Config {
+    if (self::$config == null) {
+      throw new HHUnitException("The configuration has not been initialized.");
     }
-    return self::$instance;
+    return self::$config;
   }
 
-  public static function run() : void {
-    $opts = ConsoleOptions::createFromCommandLine($_SERVER["argv"]);
-    self::getInstance()->config->initWithConsoleOptions($opts);
-
-    self::getInstance()->runner->run();
-
-    $console = new Console();
-    // TODO ???
-    // $runner = new Runner($console);
-    // $runner->run();
-    $console->run();
+  public static function getFileService() : FileService {
+    if (self::$fileService == null) {
+      self::$fileService = new FileService();
+    }
+    return self::$fileService;
   }
 
-  public function __construct() {
-    $this->config = new Config();
-    $this->console = new Console();
-    $this->fileService = new FileService();
-    $this->runner = new Runner();
+  public static function getPrinter() : IPrinter {
+    if (self::$printer == null) {
+      throw new HHUnitException("The printer has not been initialized.");
+    }
+    return self::$printer;
+  }
+
+  public static function setPrinter(IPrinter $printer) : void {
+    self::$printer = $printer;
   }
 }

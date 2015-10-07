@@ -1,0 +1,5 @@
+
+namespace MyAwesomeNamespace;
+
+noclass ClassWithNamespace {
+}

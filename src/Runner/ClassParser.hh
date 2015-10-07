@@ -1,15 +1,23 @@
-<?hh
+<?hh // strict
 
-namespace HHUnit;
+namespace HHUnit\Runner;
 
-class Parser {
-  public static function parseFile($filePath) : ?string {
+use \HHUnit\HHUnit;
+use \HHUnit\Exception\UnparseableException;
+
+class ClassParser {
+  public static function getClassName(string $filePath) : string {
     // TODO optimize this. We shouldn't read the entire file
-    $fileContent = file_get_contents($filePath);
-    return Parser::parseFileContent($fileContent);
+    $fs = HHUnit::getFileService();
+    $fileContent = $fs->getFileContent($filePath);
+    $className = self::getClassNameFromContent($fileContent);
+    if ($className === null) {
+      throw new UnparseableException("Cannot find a classname for file at ".$filePath);
+    }
+    return $className;
   }
 
-  public static function parseFileContent(string $fileContent) : ?string {
+  public static function getClassNameFromContent(string $fileContent) : ?string {
     $className = null;
     $namespace = null;
 
@@ -43,7 +51,7 @@ class Parser {
           $className = $token;
         }
         if ($inNamespace) {
-          if ($namespace == null) {
+          if ($namespace === null) {
             $namespace = "";
           }
           $namespace .= $token;
@@ -53,12 +61,13 @@ class Parser {
       $i++;
     }
 
-    if ($className != null) {
-      if ($namespace != null) {
+    if ($className !== null) {
+      if ($namespace !== null) {
         $className = $namespace."\\".$className;
       }
       return $className;
     }
+
     return null;
   }
 }

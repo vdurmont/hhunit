@@ -3,7 +3,10 @@
 namespace HHUnit;
 
 // Load everything.
-require(__DIR__."/src/autoload.php");
+require(__DIR__."/src/autoload.hh");
 
-// Bootstrap the program
-HHUnit::run();
+use \HHUnit\UI\Console;
+
+// Bootstrap the program with the defaults
+$console = new Console();
+HHUnit::run($console, $console);

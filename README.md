@@ -2,106 +2,86 @@
 
 Testing framework for Hack.
 
-_**Disclaimer:** This is a "quick'n'dirty" project that I created while learning Hack and diving into PHP. It works pretty well for now but there are A LOT of things to do before using it in a real production environment :)_
+_**Disclaimer:** This is a "quick'n'dirty" project that I created while learning Hack and diving into PHP. There are A LOT of things to do before using it in a real production environment :)_
 
-## Installation
+## Table of contents
 
-* Install [HHVM](http://docs.hhvm.com/manual/en/install-intro.install.php)
-* Clone the repository
-```
-git clone git@github.com:vdurmont/HHUnit.git
-```
+* [Install and run](#Install-and-run)
+* [My first test](#My-first-test)
+* [More examples](#More-examples)
+* [Configuration](#Configuration)
+* [Testing lifecycle](#Testing-lifecycle)
+* Extending HHUnit
+* Contributing
+* License
 
-_**TODO** Look into a .phar distribution_  
-_**TODO** Make it available on packagist_
+# Install & run
 
-## Command line usage
+// TODO
 
-You should create a cool alias to simplify your life:
-```
-alias hhunit="hhvm <HHUNIT_HOME>/hhunit"
-```
+# My first test
 
-Run the tests with:
+Let's say you have a class like this one:
 
-```bash
-hhvm <HHUNIT_HOME>/hhunit <TEST_PATH>
-# Or with the alias:
-hhunit <TEST_PATH>
-```
-
-Output example:
-
-![Output examples for the commande line tool](./console-output.png)
-
-## Writing tests
-
-### My first test
-
-Let's say that this is the class you want to test (`<PROJECT>/src/MyCalculator.hh`):
 ```php
-<?hh
+<?hh // strict
+
+namespace MyProject;
 
 class MyCalculator {
-  public function add(int $a, int $b) : int {
-    return $a + $b;
+  public static function add(int $a, int $b) : int {
+    return $a + $b; // Wow such cleverness.
   }
 }
 ```
 
-Here is an example of test (`<PROJECT>/test/MyCalculatorTest.hh`):
+Here is a simple test:
+
 ```php
-<?hh
+<?hh // strict
 
-require_once("<HHUNIT_HOME>/src/autoload.hh");
-require_once("../src/MyCalculator.hh");
+use \HHUnit\Assert\Assert;
+use \MyProject\MyCalculator;
 
-use \HHUnit\Test;
-
-class MyCoolClassTest extends Test {
-  public function test_add_two_positive_numbers() : void {
-    // GIVEN
-    $calculator = new MyCalculator();
-
-    // WHEN
-    $result = $calculator->add(3, 4);
-
-    // THEN
-    $this->assertEquals(7, $result);
+class MyCalculatorTest {
+  <<Test>>
+  public function add_two_positive_numbers() {
+    $result = MyCalculator::add(3, 4);
+    Assert::equals(7, $result);
   }
 }
 ```
 
-_**TODO** More examples_
+Let's run it:
 
+```bash
+hhunit /path/to/MyCalculatorTest.hh
+```
 
-## Lifecycle methods
+// TODO screenshot for the output
 
-There are 4 methods that you can override to set up or tear down a context for your tests.
+![Output for MyCalculatorTest.hh](assets/MyCalculatorTestOutput.png)
 
-* `Test::setUpClass` static method called before running the tests of this class
-* `Test::setUp` called before each test method
-* `Test::tearDown` called after each test method
-* `Test::tearDownClass` static method called after running all the tests of this class
+# More examples
 
-## Assertions
+You can find a lot of examples in the [examples](examples) folder. Each subdirectory has a README that will detail the usage.
 
-You can use a few builtin methods to make assertions in your code.
+# Configuration
 
-* `Test::assertEquals($expected, $actual, $message = null)`
-* `Test::assertTrue($actual, $message = null)`
-* `Test::assertFalse($actual, $message = null)`
-* `Test::assertNull($actual, $message = null)`
-* `Test::assertNotNull($actual, $message = null)`
+// TODO
 
-If the assertion fails, an `\HHUnit\AssertionException` will be thrown.
+# Testing lifecycle
 
-_**TODO** We need more assert methods!_
+Here is how HHUnit works:
 
-## Mocking
+* **(1)** HHUnit will read the config and require the `setUpTests` file if it is defined.
+* **(2)** For each TestSuite:
+  * **(2.1)** If your TestSuite has a method with a `<<SetUpClass>>` attribute, it will be executed.
+  * **(2.2)** For each TestCase:
+    * **(2.2.1)** If your TestSuite has a method with a `<<SetUp>>` attribute, it will be executed.
+    * **(2.2.2)** The TestCase method (with a `<<Test>>` attribute) will be executed.
+    * **(2.2.3)** If your TestSuite has a method with a `<<TearDown>>` attribute, it will be executed.
+  * **(2.3)** If your TestSuite has a method with a `<<TearDownClass>>` attribute, it will be executed.
+* **(3)** HHUnit will read the config and require the `tearDownTests` file if it is defined.
 
-_**TODO** Yeah do that._
-
-## Contributing
-
-Definitely! Send your pull requests or open new issues :)
+// TODO details and examples of what should be used where

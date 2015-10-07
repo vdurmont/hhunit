@@ -1,33 +1,30 @@
-<?hh
+<?hh // strict
 
 namespace HHUnit\Core;
 
-use \HHUnit\UI\ConsoleOptions;
+use \HHUnit\HHUnit;
 
 /**
- * Configuration for the tests.
- * Default values are initialized and can be overwritten by loading a config
- * file or specifying them in the command line interface.
- */
+* This class holds the configuration for the tests.
+*/
 class Config {
-  /**
-   * The directory or file where the tests are going to run.
-   */
+  private ?string $setUpTestsPath;
+  private ?string $tearDownTestsPath;
   private string $testPath;
 
   public function __construct() {
-      $this->testPath = getcwd();
+    $this->testPath = HHUnit::getFileService()->getCwd();
   }
 
-  public function initWithConsoleOptions(ConsoleOptions $opts) : void {
-    // TODO code me
+  public function getSetUpTestsPath() : ?string {
+    return $this->setUpTestsPath;
+  }
+
+  public function getTearDownTestsPath() : ?string {
+    return $this->tearDownTestsPath;
   }
 
   public function getTestPath() : string {
     return $this->testPath;
-  }
-
-  public function setTestPath(string $testPath) : void {
-    $this->testPath = $testPath;
   }
 }
