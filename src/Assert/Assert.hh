@@ -79,6 +79,22 @@ class Assert {
   }
 
   /**
+  * Tests the inequality between two objects.
+  * @param $notExpected The unexpected object
+  * @param $actual The actual object
+  * @param $msg An optional message for the exception in case of a failure
+  * @throws AssertionException if the objects are equal
+  */
+  public static function notEquals<T>(?T $notExpected, ?T $actual, ?string $msg = null) : void {
+    if ($notExpected === $actual) {
+      $msg = $msg === null ? "The objects are both equal to: " : $msg;
+      $msg .= print_r($notExpected, true);
+      $msg .= "\n";
+      throw new AssertionException($msg);
+    }
+  }
+
+  /**
   * Tests that a string contains another string
   * @param $needle The substring we are going to search
   * @param $haystack The string where we will search the needle

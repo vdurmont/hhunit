@@ -26,26 +26,29 @@ Let's say you have a class like this one:
 ```php
 <?hh // strict
 
-namespace MyProject;
-
 class MyCalculator {
   public static function add(int $a, int $b) : int {
-    return $a + $b; // Wow such cleverness.
+    return $a + $b;
   }
 }
 ```
 
-Here is a simple test:
+Here is a simple test (the name of the file and the class must end with `Test`):
 
 ```php
 <?hh // strict
 
 use \HHUnit\Assert\Assert;
-use \MyProject\MyCalculator;
+use \HHUnit\Runner\ClassLoader;
 
 class MyCalculatorTest {
+  <<SetUpClass>>
+  public static function setUpClass() : void {
+    ClassLoader::loadClass(__DIR__."/MyCalculator.hh");
+  }
+
   <<Test>>
-  public function add_two_positive_numbers() {
+  public function add_with_2_positive_integers() : void {
     $result = MyCalculator::add(3, 4);
     Assert::equals(7, $result);
   }
