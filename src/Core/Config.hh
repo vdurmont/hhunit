@@ -20,6 +20,10 @@ class Config {
     return $this->setUpTestsPath;
   }
 
+  public function setSetUpTestsPath(string $setUpTestsPath) : void {
+    $this->setUpTestsPath = $setUpTestsPath;
+  }
+
   public function getTearDownTestsPath() : ?string {
     return $this->tearDownTestsPath;
   }

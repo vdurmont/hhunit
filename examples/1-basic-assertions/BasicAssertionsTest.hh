@@ -1,14 +1,9 @@
 <?hh // strict
 
 use \HHUnit\Assert\Assert;
-use \HHUnit\Runner\ClassLoader;
+use \HHUnit\Examples\ExampleTestAbstract;
 
-class MyCalculatorTest {
-  <<SetUpClass>>
-  public static function setUpClass() : void {
-    ClassLoader::loadClass(__DIR__."/MyCalculator.hh");
-  }
-
+class BasicAssertionsTest extends ExampleTestAbstract {
   <<Test>>
   public function add_with_2_positive_integers() : void {
     $result = MyCalculator::add(3, 4);
