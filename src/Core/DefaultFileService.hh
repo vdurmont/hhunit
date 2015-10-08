@@ -3,10 +3,9 @@
 namespace HHUnit\Core;
 
 /**
-* Service used to wrap all the access to the FileSystem.
-* Can be overridden to connect to a remote server, mock...
+* FileService that works on the filesystem.
 */
-class FileService {
+class DefaultFileService implements IFileService {
   public function getCwd() : string {
     return getcwd();
   }

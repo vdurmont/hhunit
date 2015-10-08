@@ -3,7 +3,8 @@
 namespace HHUnit;
 
 use \HHUnit\Core\Config;
-use \HHUnit\Core\FileService;
+use \HHUnit\Core\IFileService;
+use \HHUnit\Core\DefaultFileService;
 use \HHUnit\Core\IConfigLoader;
 use \HHUnit\Exception\HHUnitException;
 use \HHUnit\Runner\TestRunner;
@@ -16,7 +17,7 @@ class HHUnit {
   // TODO real DI with annotations?
   public static ?IPrinter $printer;
   public static ?Config $config;
-  public static ?FileService $fileService;
+  public static ?IFileService $fileService;
 
   ////////////////////////////////////
   // MAIN METHODS
@@ -42,9 +43,9 @@ class HHUnit {
     return self::$config;
   }
 
-  public static function getFileService() : FileService {
+  public static function getFileService() : IFileService {
     if (self::$fileService == null) {
-      self::$fileService = new FileService();
+      self::$fileService = new DefaultFileService();
     }
     return self::$fileService;
   }
