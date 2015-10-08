@@ -71,13 +71,24 @@ You can find a lot of examples in the [examples](examples) folder. Each subdirec
 
 # Configuration
 
-// TODO
+You can configure the behavior of hhunit by creating a configuration file. This file must be named `hhunit.json` and must be in the test directory (which means the current directory if you just run `hhunit` or the specified directory if you run `hhunit [path_to_tests]`).
+
+Here is the file format:
+
+```json
+{
+  "set_up_tests_path": "./autoload.hh"
+}
+```
+
+Parameters:
+* `set_up_tests_path` *String*. The path to a file that will be required before all the tests. See section 'Testing Lifecycle'.
 
 # Testing lifecycle
 
 Here is how HHUnit works:
 
-* **(1)** HHUnit will read the config and require the `setUpTests` file if it is defined.
+* **(1)** HHUnit will read the config and require the file at `set_up_tests_path` if it is defined.
 * **(2)** For each TestSuite:
   * **(2.1)** If your TestSuite has a method with a `<<SetUpClass>>` attribute, it will be executed.
   * **(2.2)** For each TestCase:
@@ -85,6 +96,6 @@ Here is how HHUnit works:
     * **(2.2.2)** The TestCase method (with a `<<Test>>` attribute) will be executed.
     * **(2.2.3)** If your TestSuite has a method with a `<<TearDown>>` attribute, it will be executed.
   * **(2.3)** If your TestSuite has a method with a `<<TearDownClass>>` attribute, it will be executed.
-* **(3)** HHUnit will read the config and require the `tearDownTests` file if it is defined.
+* **(3)** HHUnit will read the config and require the file at `tear_down_tests_path` if it is defined.
 
 // TODO details and examples of what should be used where
