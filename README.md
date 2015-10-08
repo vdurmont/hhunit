@@ -9,17 +9,16 @@ _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning
 * [Install and run](#Install-and-run)
 * [My first test](#My-first-test)
 * [More examples](#More-examples)
-* [Configuration](#Configuration)
 * [Testing lifecycle](#Testing-lifecycle)
 * Extending HHUnit
 * Contributing
 * License
 
-# Install & run
+## Install & run
 
 // TODO
 
-# My first test
+## My first test
 
 Let's say you have a class like this one:
 
@@ -65,30 +64,15 @@ hhunit /path/to/MyCalculatorTest.hh
 
 ![Output for MyCalculatorTest.hh](assets/MyCalculatorTestOutput.png)
 
-# More examples
+## More examples
 
 You can find a lot of examples in the [examples](examples) folder. Each subdirectory has a README that will detail the usage.
 
-# Configuration
-
-You can configure the behavior of hhunit by creating a configuration file. This file must be named `hhunit.json` and must be in the test directory (which means the current directory if you just run `hhunit` or the specified directory if you run `hhunit [path_to_tests]`).
-
-Here is the file format:
-
-```json
-{
-  "set_up_tests_path": "./autoload.hh"
-}
-```
-
-Parameters:
-* `set_up_tests_path` *String*. The path to a file that will be required before all the tests. See section 'Testing Lifecycle'.
-
-# Testing lifecycle
+## Testing lifecycle
 
 Here is how HHUnit works:
 
-* **(1)** HHUnit will read the config and require the file at `set_up_tests_path` if it is defined.
+* **(1)** HHUnit will look in the `testPath` directory for a file named `HHUnitSetUp.hh`. If it exists, it will be executed.
 * **(2)** For each TestSuite:
   * **(2.1)** If your TestSuite has a method with a `<<SetUpClass>>` attribute, it will be executed.
   * **(2.2)** For each TestCase:
@@ -96,6 +80,59 @@ Here is how HHUnit works:
     * **(2.2.2)** The TestCase method (with a `<<Test>>` attribute) will be executed.
     * **(2.2.3)** If your TestSuite has a method with a `<<TearDown>>` attribute, it will be executed.
   * **(2.3)** If your TestSuite has a method with a `<<TearDownClass>>` attribute, it will be executed.
-* **(3)** HHUnit will read the config and require the file at `tear_down_tests_path` if it is defined.
+* **(3)** HHUnit will look in the `testPath` directory for a file named `HHUnitTearDown.hh`. If it exists, it will be executed.
 
-// TODO details and examples of what should be used where
+### Step 1: HHUnitSetUp
+
+If the file exists, it will be executed before all the tests. Here are a few examples of what you could do there:
+
+* Change the internal configuration of HHUnit (Runners, IFileService...)
+* Start your database server
+* Create a directory to store temporary files
+* Register your `spl_autoload`
+* // TODO other ideas?
+
+### Step 2.1: SetUpClass
+
+If you defined this method, it will be executed before running the TestSuite. Here are a few examples of what you could do there:
+
+* Create a new database
+* Check if the database state is clean
+* Load the classes you need for this TestSuite
+* // TODO other ideas?
+
+### Step 2.2.1: SetUp
+
+If you defined this method, it will be executed before running each TestCase. Here are a few examples of what you could do there:
+
+* Check if the database state is clean
+* Instantiate some common objects you use in the tests
+* // TODO other ideas?
+
+### Step 2.2.2: Test
+
+Just write your test :)
+
+### Step 2.2.3: TearDown
+
+If you defined this method, it will be executed after running each TestCase. Here are a few examples of what you could do there:
+
+* Clean the database
+* Reset some common objects you use in the tests
+* // TODO other ideas?
+
+### Step 2.3: TearDownClass
+
+If you defined this method, it will be executed after running the TestSuite. Here are a few examples of what you could do there:
+
+* Delete a database
+* Unload classes
+* // TODO other ideas?
+
+### Step 3: HHUnitTearDown
+
+If the file exists, it will be executed after all the tests. Here are a few examples of what you could do there:
+
+* Stop your database server
+* Clean some temporary directories
+* // TODO other ideas?

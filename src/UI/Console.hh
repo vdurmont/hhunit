@@ -30,6 +30,7 @@ class Console implements IPrinter, IConfigLoader {
       }
       $config->setSetUpTestsPath($setUpTestsPath);
     }
+    // TODO tearDownTestsPath
     return $config;
   }
 
