@@ -9,6 +9,8 @@ namespace HHUnit\Core;
 interface IFileService {
   public function getCwd() : string;
 
+  public function getRealpath(string $path) : string;
+
   public function isDirectory(string $path) : bool;
 
   public function isFile(string $path) : bool;

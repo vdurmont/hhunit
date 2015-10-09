@@ -6,11 +6,13 @@ namespace HHUnit;
 require(__DIR__."/src/autoload.hh");
 
 use \HHUnit\Core\DefaultFileService;
-use \HHUnit\UI\Console;
+use \HHUnit\UI\ConsoleParser;
+use \HHUnit\UI\ConsolePrinter;
 
 // Bootstrap the program with the defaults
 $fileService = new DefaultFileService();
-$testPath = "/Users/vdurmont/development/hhunit/test"; // TODO get testPath
-$console = new Console();
-$hhunit = new HHUnit($console, $fileService);
+$consoleParser = new ConsoleParser($fileService);
+$testPath = $consoleParser->getTestPath($_SERVER["argv"]);
+$consolePrinter = new ConsolePrinter();
+$hhunit = new HHUnit($consolePrinter, $fileService);
 $hhunit->run($testPath);

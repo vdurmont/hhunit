@@ -12,7 +12,7 @@ _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning
 * [Testing lifecycle](#Testing-lifecycle)
 * Extending HHUnit
 * Contributing
-* License
+* [License](#License)
 
 ## Install & run
 
@@ -66,7 +66,8 @@ hhunit /path/to/MyCalculatorTest.hh
 
 ## More examples
 
-You can find a lot of examples in the [examples](examples) folder. Each subdirectory has a README that will detail the usage.
+You can find examples in the [hhunit-examples](https://github.com/vdurmont/hhunit-examples) project.  
+Do not hesitate to propose yours!
 
 ## Testing lifecycle
 
@@ -170,3 +171,7 @@ The execution flow will be:
 <testPath>/folder2/MyThirdSubTest.hh
 <testPath>/HHUnitTearDown.hh
 ```
+
+## License
+
+Check out [LICENSE.md](./LICENSE.md).

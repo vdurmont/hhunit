@@ -1,6 +1,7 @@
 <?hh // strict
 
 use \HHUnit\Core\IFileService;
+use \HHUnit\Util\Strings;
 
 class InMemoryFolder {
   private string $name;
@@ -33,10 +34,15 @@ class InMemoryFolder {
 }
 
 class InMemoryFileService implements IFileService {
+  private ?string $cwd;
   private array<string, InMemoryFolder> $folders;
 
   public function __construct() {
     $this->folders = array();
+  }
+
+  public function setCwd(string $path) : void {
+    $this->cwd = $path;
   }
 
   public function createFolder(string $name) : InMemoryFolder {
@@ -46,7 +52,20 @@ class InMemoryFileService implements IFileService {
   }
 
   public function getCwd() : string {
-    throw new \Exception("Not implemented");
+    if ($this->cwd === null) {
+      throw new \Exception("Not implemented");
+    }
+    return $this->cwd;
+  }
+
+  public function getRealpath(string $path) : string {
+    if (Strings::startsWith("/", $path)) {
+      return $path;
+    }
+    if ($this->cwd === null) {
+      throw new \Exception("Not implemented");
+    }
+    return $this->cwd."/".$path;
   }
 
   public function isDirectory(string $path) : bool {

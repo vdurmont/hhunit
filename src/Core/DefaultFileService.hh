@@ -10,6 +10,10 @@ class DefaultFileService implements IFileService {
     return getcwd();
   }
 
+  public function getRealpath(string $path) : string {
+    return realpath($path);
+  }
+
   public function isDirectory(string $path) : bool {
     return is_dir($path);
   }
