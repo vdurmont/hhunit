@@ -55,7 +55,7 @@ Here is a simple test (the class must have the `HHUnit` attribute):
 <?hh // strict
 
 use \HHUnit\Assert\Assert;
-use \HHUnit\Runner\ClassLoader;
+use \HHUnit\Core\ClassLoader;
 
 <<HHUnit>>
 class MyCalculatorTest {
