@@ -46,6 +46,7 @@ class UIUtils {
     foreach ($summary->getTestSuites() as $testSuite) {
        $this->printTestSuiteSummary($testSuite);
     }
+    $this->printer->writeln("");
   }
 
   public function printSummaryHeader(TestSummary $summary) : void {
