@@ -1,15 +1,20 @@
 <?hh // strict
 
-namespace HHUnit\Runner;
+namespace HHUnit\Core;
 
 use \HHUnit\HHUnit;
 use \HHUnit\Exception\UnparseableException;
 
 class ClassParser {
-  public static function getClassName(string $filePath) : string {
+  private IFileService $fileService;
+
+  public function __construct(IFileService $fileService) {
+    $this->fileService = $fileService;
+  }
+
+  public function getClassName(string $filePath) : string {
     // TODO optimize this. We shouldn't read the entire file
-    $fs = HHUnit::getFileService();
-    $fileContent = $fs->getFileContent($filePath);
+    $fileContent = $this->fileService->getFileContent($filePath);
     $className = self::getClassNameFromContent($fileContent);
     if ($className === null) {
       throw new UnparseableException("Cannot find a classname for file at ".$filePath);

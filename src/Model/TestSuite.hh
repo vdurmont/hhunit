@@ -2,10 +2,14 @@
 
 namespace HHUnit\Model;
 
-class TestSuite {
+class TestSuite<T> {
   private TestStatus $status;
   private string $path;
-  private string $className;
+  private \ReflectionClass $class;
+
+  private array<LifecycleIdentifier, \ReflectionMethod> $lifecycleMethods;
+  private array<\ReflectionMethod> $testMethods;
+  private T $instance;
 
   private array<TestCase> $testCases;
 
@@ -16,10 +20,14 @@ class TestSuite {
   private int $numFailures;
   private int $numErrors;
 
-  public function __construct(string $path, string $className) {
+  public function __construct(string $path, \ReflectionClass $class, T $instance) {
     $this->status = TestStatus::LOADING;
     $this->path = $path;
-    $this->className = $className;
+    $this->class = $class;
+    $this->lifecycleMethods = array();
+    $this->testMethods = array();
+    $this->instance = $instance;
+
     $this->testCases = array();
 
     // Init default values
@@ -42,8 +50,28 @@ class TestSuite {
     return $this->path;
   }
 
-  public function getClassName() : string {
-    return $this->className;
+  public function getClass() : \ReflectionClass {
+    return $this->class;
+  }
+
+  public function getLifecycleMethods() : array<LifecycleIdentifier, \ReflectionMethod> {
+    return $this->lifecycleMethods;
+  }
+
+  public function getTestMethods() : array<\ReflectionMethod> {
+    return $this->testMethods;
+  }
+
+  public function addTestMethod(\ReflectionMethod $method) : void {
+    $this->testMethods[] = $method;
+  }
+
+  public function addLifecycleMethod(LifecycleIdentifier $identifier, \ReflectionMethod $method) : void {
+    $this->lifecycleMethods[$identifier] = $method;
+  }
+
+  public function getInstance() : T {
+    return $this->instance;
   }
 
   public function getTestCases() : array<TestCase> {

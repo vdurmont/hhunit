@@ -1,10 +1,6 @@
 <?hh // strict
 
-namespace HHUnit\Core;
-
 use \HHUnit\Core\IFileService;
-
-// TODO move me!
 
 class InMemoryFolder {
   private string $name;

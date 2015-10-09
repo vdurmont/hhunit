@@ -33,7 +33,7 @@ class TestTreeBuilder {
         if (Strings::endsWith("Test.hh", $fullFile) || Strings::endsWith("Test.php", $fullFile)) {
           $tree->addTestSuitePath($fullFile);
         }
-      } else {
+      } else if ($file !== "." && $file !== "..") {
         $subTree = $this->buildTree($fullFile);
         $tree->addTestTree($subTree);
       }

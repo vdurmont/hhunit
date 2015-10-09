@@ -2,62 +2,41 @@
 
 namespace HHUnit;
 
-use \HHUnit\Core\Config;
 use \HHUnit\Core\IFileService;
-use \HHUnit\Core\DefaultFileService;
-use \HHUnit\Core\IConfigLoader;
-use \HHUnit\Exception\HHUnitException;
-use \HHUnit\Runner\TestRunner;
+use \HHUnit\Core\TestTreeBuilder;
+use \HHUnit\Model\TestSummary;
+use \HHUnit\Runner\TestTreeRunner;
 use \HHUnit\UI\IPrinter;
+use \HHUnit\UI\UIUtils;
 
 /**
 * HHUnit is the main entrypoint of the test framework.
 */
 class HHUnit {
-  // TODO real DI with annotations?
-  public static ?IPrinter $printer;
-  public static ?Config $config;
-  public static ?IFileService $fileService;
+  // TODO real DI
+  public IPrinter $printer;
+  public IFileService $fileService;
 
-  ////////////////////////////////////
-  // MAIN METHODS
-  ////////////////////////////////////
-
-  public static function run(IPrinter $printer, IConfigLoader $configLoader) : void {
+  public function __construct(IPrinter $printer, IFileService $fileService) {
     // Init the DI components
-    self::$printer = $printer;
-    self::$config = $configLoader->loadConfig();
-
-    // Run the tests
-    TestRunner::run();
+    $this->printer = $printer;
+    $this->fileService = $fileService;
   }
 
-  ////////////////////////////////////
-  // DI ACCESSORS
-  ////////////////////////////////////
+  public function run(string $testPath) : void {
+    // TODO check the testPath
 
-  public static function getConfig() : Config {
-    if (self::$config == null) {
-      throw new HHUnitException("The configuration has not been initialized.");
-    }
-    return self::$config;
-  }
+    $summary = new TestSummary($testPath);
 
-  public static function getFileService() : IFileService {
-    if (self::$fileService == null) {
-      self::$fileService = new DefaultFileService();
-    }
-    return self::$fileService;
-  }
+    $builder = new TestTreeBuilder($this->fileService);
+    $tree = $builder->buildTree($testPath);
 
-  public static function getPrinter() : IPrinter {
-    if (self::$printer == null) {
-      throw new HHUnitException("The printer has not been initialized.");
-    }
-    return self::$printer;
-  }
+    $runner = new TestTreeRunner($this->printer, $this->fileService);
+    $runner->run($tree, $summary);
 
-  public static function setPrinter(IPrinter $printer) : void {
-    self::$printer = $printer;
+    $summary->setEndTime(microtime(true));
+
+    $uiUtils = new UIUtils($this->printer);
+    $uiUtils->printSummary($summary);
   }
 }

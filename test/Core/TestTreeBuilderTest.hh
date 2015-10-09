@@ -2,10 +2,15 @@
 
 use \HHUnit\Assert\Assert;
 use \HHUnit\Core\TestTreeBuilder;
-use \HHUnit\Core\InMemoryFileService;
+use \HHUnit\Core\ClassLoader;
 use \HHUnit\Model\TestTree;
 
 class TestTreeBuilderTest {
+  <<SetUpClass>>
+  public static function setUpClass() : void {
+    ClassLoader::loadClass(__DIR__."/../../testResources/InMemoryFileService.hh");
+  }
+
   <<Test>>
   public function buildTree_a_full_test() : void {
     // /my/project/test

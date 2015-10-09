@@ -1,7 +1,7 @@
 <?hh // strict
 
 use \HHUnit\Assert\Assert;
-use \HHUnit\Runner\ClassParser;
+use \HHUnit\Core\ClassParser;
 
 class ClassParserTest {
   <<Test>>
