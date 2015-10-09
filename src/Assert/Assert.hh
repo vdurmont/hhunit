@@ -9,6 +9,24 @@ use \HHUnit\Exception\AssertionException;
 */
 class Assert {
   /**
+  * Tests that an object is in an array
+  * @param $needle The object to search
+  * @param $haystack The array where we will search the needle
+  * @param $msg An optional message for the exception in case of a failure
+  * @throws AssertionException if the needle is not in the haystack
+  */
+  public static function arrayContains<T>(T $needle, array<T> $haystack, ?string $msg = null) : void {
+    $res = in_array($needle, $haystack);
+    if ($res === FALSE) {
+      $msg = $msg === null ? "Element not found" : $msg;
+      $msg .= "\n\tExpected: An array that contains \"".print_r($needle, true)."\"";
+      $msg .= "\n\tActual: ".print_r($haystack, true);
+      $msg .= "\n";
+      throw new AssertionException($msg);
+    }
+  }
+
+  /**
   * Tests the equality between two objects.
   * @param $expected The expected object
   * @param $actual The actual object
@@ -105,7 +123,7 @@ class Assert {
     $res = strpos($haystack, $needle);
     if ($res === FALSE) {
       $msg = $msg === null ? "Substring not found" : $msg;
-      $msg .= "\n\tExpected: A string that contains \"\"";
+      $msg .= "\n\tExpected: A string that contains \"".$needle."\"";
       $msg .= "\n\tActual: ".$haystack;
       $msg .= "\n";
       throw new AssertionException($msg);

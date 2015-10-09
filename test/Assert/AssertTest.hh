@@ -6,6 +6,18 @@ use \HHUnit\Exception\AssertionException;
 // Wow such inception.
 class AssertTest {
   <<Test, ExpectException("\HHUnit\Exception\AssertionException")>>
+  public function arrayContains_if_doesnt_contains_fails() {
+    $arr = array("a", "b");
+    Assert::arrayContains("c", $arr);
+  }
+
+  <<Test, ExpectException("\HHUnit\Exception\AssertionException")>>
+  public function arrayContains_if_contains_is_ok() {
+    $arr = array("a", "b");
+    Assert::arrayContains("b", $arr);
+  }
+
+  <<Test, ExpectException("\HHUnit\Exception\AssertionException")>>
   public function fail_fails() {
     Assert::fail();
   }
