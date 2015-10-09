@@ -8,13 +8,13 @@ _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning
 
 ## Table of contents
 
-* [Install and run](#Install-and-run)
-* [My first test](#My-first-test)
-* [More examples](#More-examples)
-* [Testing lifecycle](#Testing-lifecycle)
+* [Install and run](#install-and-run)
+* [My first test](#my-first-test)
+* [More examples](#more-examples)
+* [Testing lifecycle](#testing-lifecycle)
 * Extending HHUnit
 * Contributing
-* [License](###License)
+* [License](#license)
 
 ## Install & run
 
