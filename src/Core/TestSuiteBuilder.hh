@@ -12,10 +12,16 @@ class TestSuiteBuilder {
     $this->classParser = new ClassParser($fileService);
   }
 
-  public function buildTestSuite<T>(string $path) : TestSuite<T> {
+  public function buildTestSuite<T>(string $path) : ?TestSuite<T> {
     $className = $this->classParser->getClassName($path);
     ClassLoader::loadClass($path);
     $class = new \ReflectionClass($className);
+
+    if ($class->isAbstract()) {
+      // Cannot instantiate an abstract class
+      return null;
+    }
+
     $instance = $class->newInstance();
     $testSuite = new TestSuite($path, $class, $instance);
 

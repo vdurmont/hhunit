@@ -23,10 +23,14 @@ class TestSuiteRunner {
     $this->uiUtils = new UIUtils($printer);
   }
 
-  public function run<T>(string $testSuitePath) : TestSuite<T> {
+  public function run<T>(string $testSuitePath) : ?TestSuite<T> {
     // Load the TestSuite
     $builder = new TestSuiteBuilder($this->fileService);
     $testSuite = $builder->buildTestSuite($testSuitePath);
+    
+    if($testSuite === null) {
+      return null;
+    }
 
     $this->uiUtils->printTestSuiteStart($testSuite);
 

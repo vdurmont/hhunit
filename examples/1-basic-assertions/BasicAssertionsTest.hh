@@ -1,9 +1,9 @@
 <?hh // strict
 
 use \HHUnit\Assert\Assert;
-use \HHUnit\Examples\ExampleTestAbstract;
+use \HHUnit\Examples\AbstractExampleTest;
 
-class BasicAssertionsTest extends ExampleTestAbstract {
+class BasicAssertionsTest extends AbstractExampleTest {
   <<Test>>
   public function add_with_2_positive_integers() : void {
     $result = MyCalculator::add(3, 4);

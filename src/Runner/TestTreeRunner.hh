@@ -10,7 +10,8 @@ use \HHUnit\Model\TestTree;
 use \HHUnit\UI\IPrinter;
 
 class TestTreeRunner {
-  public function __construct(private IPrinter $printer, private IFileService $fileService) {}
+  public function __construct(private IPrinter $printer, private IFileService $fileService) {
+  }
 
   public function run(TestTree $testTree, TestSummary $summary) : void {
     // TODO save state (IStateService)
@@ -24,7 +25,9 @@ class TestTreeRunner {
     foreach ($testTree->getTestSuitesPaths() as $testSuitePath) {
       $testSuiteRunner = new TestSuiteRunner($this->printer, $this->fileService);
       $testSuite = $testSuiteRunner->run($testSuitePath);
-      $summary->addTestSuite($testSuite);
+      if ($testSuite !== null) {
+        $summary->addTestSuite($testSuite);
+      }
     }
 
     // Run the subtrees
