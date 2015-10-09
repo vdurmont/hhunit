@@ -169,6 +169,14 @@ The execution flow will be:
 <testPath>/HHUnitTearDown.hh
 ```
 
+## Extending HHUnit
+
+// TODO write me
+
+## Contributing
+
+// TODO write me
+
 ## License
 
 Check out [LICENSE.md](./LICENSE.md).
