@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\UI\UIUtils;
 
+<<HHUnit>>
 class UIUtilsTest {
   <<Test>>
   public function prettyDuration_with_zero() {

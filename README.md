@@ -34,7 +34,7 @@ class MyCalculator {
 }
 ```
 
-Here is a simple test (the name of the file and the class must end with `Test`):
+Here is a simple test (the class must have the `HHUnit` attribute):
 
 ```php
 <?hh // strict
@@ -42,6 +42,7 @@ Here is a simple test (the name of the file and the class must end with `Test`):
 use \HHUnit\Assert\Assert;
 use \HHUnit\Runner\ClassLoader;
 
+<<HHUnit>>
 class MyCalculatorTest {
   <<SetUpClass>>
   public static function setUpClass() : void {

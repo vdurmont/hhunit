@@ -4,6 +4,7 @@ use \HHUnit\Assert\Assert;
 use \HHUnit\Examples\AbstractExampleTest;
 use \HHUnit\Runner\ClassLoader;
 
+<<HHUnit>>
 class ExpectExceptionTest extends AbstractExampleTest {
   <<Test, ExpectException("BadUsageException")>>
   public function this_will_throw_an_expected_exception() : void {

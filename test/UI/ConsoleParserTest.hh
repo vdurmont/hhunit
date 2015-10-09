@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\UI\ConsoleParser;
 
+<<HHUnit>>
 class ConsoleParserTest {
   <<SetUpClass>>
   public function setUpClass() : void {

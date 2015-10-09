@@ -2,6 +2,7 @@
 
 namespace HHUnit\Core;
 
+use \HHUnit\Exception\UnparseableException;
 use \HHUnit\Model\LifecycleIdentifier;
 use \HHUnit\Model\TestSuite;
 
@@ -13,12 +14,16 @@ class TestSuiteBuilder {
   }
 
   public function buildTestSuite<T>(string $path) : ?TestSuite<T> {
-    $className = $this->classParser->getClassName($path);
+    try {
+      $className = $this->classParser->getClassName($path);
+    } catch(UnparseableException $e) {
+      return null;
+    }
     ClassLoader::loadClass($path);
     $class = new \ReflectionClass($className);
 
-    if ($class->isAbstract()) {
-      // Cannot instantiate an abstract class
+    if ($class->isAbstract() || $class->getAttribute("HHUnit") === null) {
+      // Cannot instantiate an abstract class and do not instantiate if it is not annotated with <<HHUnit>>
       return null;
     }
 

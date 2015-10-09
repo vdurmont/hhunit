@@ -4,6 +4,7 @@ use \HHUnit\Assert\Assert;
 use \HHUnit\Exception\AssertionException;
 
 // Wow such inception.
+<<HHUnit>>
 class AssertTest {
   <<Test, ExpectException("\HHUnit\Exception\AssertionException")>>
   public function arrayContains_if_doesnt_contains_fails() {

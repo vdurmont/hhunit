@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\Core\ClassParser;
 
+<<HHUnit>>
 class ClassParserTest {
   <<Test>>
   public function getClassNameFromContent_with_a_simple_class() : void {

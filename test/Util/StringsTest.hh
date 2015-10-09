@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\Util\Strings;
 
+<<HHUnit>>
 class StringsTest {
   <<Test>>
   public function startsWith_if_the_string_starts_with_the_needle() {

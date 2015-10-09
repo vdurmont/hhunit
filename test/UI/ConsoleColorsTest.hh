@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\UI\ConsoleColors;
 
+<<HHUnit>>
 class ConsoleColorsTest {
   private static string $STR = "mystring";
 

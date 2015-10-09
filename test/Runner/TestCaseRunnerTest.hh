@@ -8,6 +8,7 @@ use \HHUnit\Model\TestStatus;
 use \HHUnit\Runner\TestCaseRunner;
 use \HHUnit\UI\IPrinter;
 
+<<HHUnit>>
 class TestCaseRunnerTest {
   <<SetUpClass>>
   public static function setUpClass() : void {

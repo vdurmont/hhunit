@@ -3,6 +3,7 @@
 use \HHUnit\Assert\Assert;
 use \HHUnit\Examples\AbstractExampleTest;
 
+<<HHUnit>>
 class BasicAssertionsTest extends AbstractExampleTest {
   <<Test>>
   public function add_with_2_positive_integers() : void {

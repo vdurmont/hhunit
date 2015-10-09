@@ -19,18 +19,16 @@ class TestTreeBuilder {
     }
 
     $tree = new TestTree($rootPath);
-    if ($this->fileService->isFile($rootPath."/HHUnitSetUp.hh")) {
-      $tree->setHasSetUp(TRUE);
-    }
-    if ($this->fileService->isFile($rootPath."/HHUnitTearDown.hh")) {
-      $tree->setHasTearDown(TRUE);
-    }
 
     $files = $this->fileService->scanDirectory($rootPath);
     foreach ($files as $file) {
       $fullFile = $rootPath."/".$file;
       if ($this->fileService->isFile($fullFile)) {
-        if (Strings::endsWith("Test.hh", $fullFile) || Strings::endsWith("Test.php", $fullFile)) {
+        if ($file === "HHUnitSetUp.hh") {
+          $tree->setHasSetUp(TRUE);
+        } else if ($file === "HHUnitTearDown.hh") {
+          $tree->setHasTearDown(TRUE);
+        } else if (Strings::endsWith(".hh", $file) || Strings::endsWith(".php", $file)) {
           $tree->addTestSuitePath($fullFile);
         }
       } else if ($file !== "." && $file !== "..") {

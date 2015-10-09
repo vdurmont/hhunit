@@ -5,6 +5,7 @@ use \HHUnit\Core\TestTreeBuilder;
 use \HHUnit\Core\ClassLoader;
 use \HHUnit\Model\TestTree;
 
+<<HHUnit>>
 class TestTreeBuilderTest {
   <<SetUpClass>>
   public static function setUpClass() : void {
@@ -25,7 +26,7 @@ class TestTreeBuilderTest {
     //      |- /subfolder2
     //      |     |- HHUnitTearDown.hh
     //      |     |- MyOtherTest.hh
-    //      |     |- RandomFile2.hh
+    //      |     |- RandomFile2
     //      |- /subfolder3
     //      |     |- MyLastTest.hh
     //      |- /subfolder4
@@ -50,7 +51,7 @@ class TestTreeBuilderTest {
     self::assertTree($rootTree, "/my/project/test", true, true, $tests, 6);
 
     $subfolder1 = $rootTree->getTestTree("/my/project/test/subfolder1");
-    $tests = array("/my/project/test/subfolder1/MyTest.hh");
+    $tests = array("/my/project/test/subfolder1/MyTest.hh", "/my/project/test/subfolder1/RandomFile1.hh");
     self::assertTree($subfolder1, "/my/project/test/subfolder1", true, false, $tests, 0);
 
     $subfolder2 = $rootTree->getTestTree("/my/project/test/subfolder2");
@@ -62,7 +63,7 @@ class TestTreeBuilderTest {
     self::assertTree($subfolder3, "/my/project/test/subfolder3", false, false, $tests, 0);
 
     $subfolder4 = $rootTree->getTestTree("/my/project/test/subfolder4");
-    $tests = array();
+    $tests = array("/my/project/test/subfolder4/RandomFile3.hh");
     self::assertTree($subfolder4, "/my/project/test/subfolder4", false, false, $tests, 0);
 
     $subfolder5 = $rootTree->getTestTree("/my/project/test/subfolder5");
@@ -112,7 +113,7 @@ class TestTreeBuilderTest {
     $subfolder2 = $root->createFolder("subfolder2");
     $subfolder2->createFile("HHUnitTearDown.hh");
     $subfolder2->createFile("MyOtherTest.hh");
-    $subfolder2->createFile("RandomFile2.hh");
+    $subfolder2->createFile("RandomFile2");
     $subfolder3 = $root->createFolder("subfolder3");
     $subfolder3->createFile("MyLastTest.hh");
     $subfolder4 = $root->createFolder("subfolder4");
