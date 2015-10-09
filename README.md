@@ -18,7 +18,22 @@ _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning
 
 ## Install & run
 
-// TODO
+You should have hhvm running on your computer.
+
+We will soon publish a beta version on composer. In the meantime, you should clone this repository and create an alias to the `hhunit` file:
+
+```
+git clone git@github.com:vdurmont/hhunit.git ~/.hhunit
+alias hhunit="hhvm ~/.hhunit/hhunit"
+```
+
+Run with:
+
+```
+hhunit [testPath]
+```
+
+`testPath` is optional. If not provided, the current working directory will be used as a test path.
 
 ## My first test
 
