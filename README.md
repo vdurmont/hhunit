@@ -72,7 +72,7 @@ You can find a lot of examples in the [examples](examples) folder. Each subdirec
 
 Here is how HHUnit works:
 
-* **(1)** HHUnit will look in the `testPath` directory for a file named `HHUnitSetUp.hh`. If it exists, it will be executed.
+* **(1)** HHUnit will search recursively in the `testPath` directory for files named `HHUnitSetUp.hh`. If some are found, they will be executed.
 * **(2)** For each TestSuite:
   * **(2.1)** If your TestSuite has a method with a `<<SetUpClass>>` attribute, it will be executed.
   * **(2.2)** For each TestCase:
@@ -80,7 +80,7 @@ Here is how HHUnit works:
     * **(2.2.2)** The TestCase method (with a `<<Test>>` attribute) will be executed.
     * **(2.2.3)** If your TestSuite has a method with a `<<TearDown>>` attribute, it will be executed.
   * **(2.3)** If your TestSuite has a method with a `<<TearDownClass>>` attribute, it will be executed.
-* **(3)** HHUnit will look in the `testPath` directory for a file named `HHUnitTearDown.hh`. If it exists, it will be executed.
+* **(3)** HHUnit will search recursively in the `testPath` directory for files named `HHUnitTearDown.hh`. If some are found, they will be executed.
 
 ### Step 1: HHUnitSetUp
 
@@ -136,3 +136,37 @@ If the file exists, it will be executed after all the tests. Here are a few exam
 * Stop your database server
 * Clean some temporary directories
 * // TODO other ideas?
+
+### A full example
+
+If you have the following hierarchy:
+
+```
+<testPath>
+      |- HHUnitSetUp.hh
+      |- HHUnitTearDown.hh
+      |- MyFirstTest.hh
+      |- MySecondTest.hh
+      |- folder1
+      |    |- HHUnitSetUp.hh
+      |    |- HHUnitTearDown.hh
+      |    |- MyFirstSubTest.hh
+      |    \- MySecondSubTest.hh
+      |
+      \- folder2
+            \- MyThirdSubTest.hh
+```
+
+The execution flow will be:
+
+```
+<testPath>/HHUnitSetUp.hh
+<testPath>/MyFirstTest.hh
+<testPath>/MySecondTest.hh
+<testPath>/folder1/HHUnitSetUp.hh
+<testPath>/folder1/MyFirstSubTest.hh
+<testPath>/folder1/MySecondSubTest.hh
+<testPath>/folder1/HHUnitTearDown.hh
+<testPath>/folder2/MyThirdSubTest.hh
+<testPath>/HHUnitTearDown.hh
+```
