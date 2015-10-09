@@ -14,7 +14,7 @@ _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning
 * [Testing lifecycle](#Testing-lifecycle)
 * Extending HHUnit
 * Contributing
-* [License](#License)
+* [License](###License)
 
 ## Install & run
 
