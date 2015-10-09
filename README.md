@@ -2,6 +2,8 @@
 
 Testing framework for Hack.
 
+![Output example](./output-example.png)
+
 _**Disclaimer:** This is a "quick'n'dirty" project that I created while learning Hack and diving into PHP. There are A LOT of things to do before using it in a real production environment :)_
 
 ## Table of contents
@@ -60,14 +62,9 @@ Let's run it:
 hhunit /path/to/MyCalculatorTest.hh
 ```
 
-// TODO screenshot for the output
-
-![Output for MyCalculatorTest.hh](assets/MyCalculatorTestOutput.png)
-
 ## More examples
 
-You can find examples in the [hhunit-examples](https://github.com/vdurmont/hhunit-examples) project.  
-Do not hesitate to propose yours!
+You can find examples in the [examples](./examples) folder.  
 
 ## Testing lifecycle
 
