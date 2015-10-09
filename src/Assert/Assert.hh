@@ -67,6 +67,21 @@ class Assert {
   }
 
   /**
+  * Tests that an object is not null.
+  * @param $actual The object
+  * @param $msg An optional message for the exception in case of a failure
+  * @throws AssertionException if the object is null
+  */
+  public static function isNotNull<T>(?T $actual, ?string $msg = null) : void {
+    if ($actual === null) {
+      $msg = $msg === null ? "Comparison error" : $msg;
+      $msg .= "\n\tExpected: not null";
+      $msg .= "\n\tActual: NULL\n";
+      throw new AssertionException($msg);
+    }
+  }
+
+  /**
   * Tests that an object is null.
   * @param $actual The object
   * @param $msg An optional message for the exception in case of a failure
